@@ -24,11 +24,15 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Year {{ now()->year }}
+                            Year {{ session('year') ?? now()->year }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @for ($i = now()->year; $i > now()->year - 10; $i--)
-                                <li><a class="dropdown-item" href="#">{{ $i }}</a></li>
+                                <li>
+                                    <a class="dropdown-item{{ session('year') == $i ? ' fw-bold' : '' }}" href="{{ route('change-year', $i) }}">
+                                        {{ $i }}
+                                    </a>
+                                </li>
                             @endfor
                         </ul>
                     </li>
