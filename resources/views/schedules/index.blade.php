@@ -46,20 +46,20 @@
                         <td>
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <input type="date" name="key_in_starts[1]" class="form-control">
+                                    <input type="date" name="key_in_starts[1]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 1))->key_in_starts_on }}">
                                 </div>
                                 <div class="col">
-                                    <input type="date" name="key_in_ends[1]" class="form-control">
+                                    <input type="date" name="key_in_ends[1]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 1))->key_in_ends_on }}">
                                 </div>
                             </div>
                         </td>
                         <td>
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <input type="date" name="approval_starts[1]" class="form-control">
+                                    <input type="date" name="approval_starts[1]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 1))->approval_starts_on }}">
                                 </div>
                                 <div class="col">
-                                    <input type="date" name="approval_ends[1]" class="form-control">
+                                    <input type="date" name="approval_ends[1]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 1))->approval_ends_on }}">
                                 </div>
                             </div>
                         </td>
@@ -69,20 +69,20 @@
                         <td>
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <input type="date" name="key_in_starts[2]" class="form-control">
+                                    <input type="date" name="key_in_starts[2]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 2))->key_in_starts_on }}">
                                 </div>
                                 <div class="col">
-                                    <input type="date" name="key_in_ends[2]" class="form-control">
+                                    <input type="date" name="key_in_ends[2]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 2))->key_in_ends_on }}">
                                 </div>
                             </div>
                         </td>
                         <td>
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <input type="date" name="approval_starts[2]" class="form-control">
+                                    <input type="date" name="approval_starts[2]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 2))->approval_starts_on }}">
                                 </div>
                                 <div class="col">
-                                    <input type="date" name="approval_ends[2]" class="form-control">
+                                    <input type="date" name="approval_ends[2]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 2))->approval_ends_on }}">
                                 </div>
                             </div>
                         </td>
@@ -92,20 +92,20 @@
                         <td>
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <input type="date" name="key_in_starts[3]" class="form-control">
+                                    <input type="date" name="key_in_starts[3]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 3))->key_in_starts_on }}">
                                 </div>
                                 <div class="col">
-                                    <input type="date" name="key_in_ends[3]" class="form-control">
+                                    <input type="date" name="key_in_ends[3]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 3))->key_in_ends_on }}">
                                 </div>
                             </div>
                         </td>
                         <td>
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <input type="date" name="approval_starts[3]" class="form-control">
+                                    <input type="date" name="approval_starts[3]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 3))->approval_starts_on }}">
                                 </div>
                                 <div class="col">
-                                    <input type="date" name="approval_ends[3]" class="form-control">
+                                    <input type="date" name="approval_ends[3]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 3))->approval_ends_on }}">
                                 </div>
                             </div>
                         </td>
@@ -115,20 +115,20 @@
                         <td>
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <input type="date" name="key_in_starts[4]" class="form-control">
+                                    <input type="date" name="key_in_starts[4]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 4))->key_in_starts_on }}">
                                 </div>
                                 <div class="col">
-                                    <input type="date" name="key_in_ends[4]" class="form-control">
+                                    <input type="date" name="key_in_ends[4]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 4))->key_in_ends_on }}">
                                 </div>
                             </div>
                         </td>
                         <td>
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <input type="date" name="approval_starts[4]" class="form-control">
+                                    <input type="date" name="approval_starts[4]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 4))->approval_starts_on }}">
                                 </div>
                                 <div class="col">
-                                    <input type="date" name="approval_ends[4]" class="form-control">
+                                    <input type="date" name="approval_ends[4]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', 4))->approval_ends_on }}">
                                 </div>
                             </div>
                         </td>
