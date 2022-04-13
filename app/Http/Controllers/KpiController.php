@@ -2,39 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kpi;
+use App\Models\Perspective;
 use Illuminate\Http\Request;
 
 class KpiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $perspectives = Perspective::orderBy('code')->get();
+
+        return view('kpis/index', compact('perspectives'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $perspectives = Perspective::orderBy('code')->get();
+        $kpi = new Kpi();
+
+        return view('kpis/create', compact('perspectives', 'kpi'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'code' => 'required',
+            'name' => 'required',
+            'od' => 'required',
+            'target' => 'required|numeric',
+            // 'perspective_id' => 'required',
+        ]);
+
+        Kpi::create($request->all());
     }
 
     /**

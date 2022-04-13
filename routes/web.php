@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KpiController;
 use App\Http\Controllers\PerspectiveController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,4 @@ Route::get('/schedules/{year?}', [ScheduleController::class, 'index'])->name('sc
 Route::post('/schedules/{year}', [ScheduleController::class, 'store'])->name('schedules.store');
 
 Route::resource('/perspectives', PerspectiveController::class);
+Route::resource('/kpis', KpiController::class);

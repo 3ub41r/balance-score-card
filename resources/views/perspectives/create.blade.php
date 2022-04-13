@@ -40,15 +40,19 @@
                 Save
             </button>
 
-            <button id="delete-btn" type="button" class="btn btn-link text-danger">
-                Delete
-            </button>
+            @if ($perspective->id)
+                <button id="delete-btn" type="button" class="btn btn-link text-danger">
+                    Delete
+                </button>
+            @endif
         </form>
 
-        <form id="delete-form" action="{{ route('perspectives.destroy', $perspective) }}" method="POST">
-            @csrf
-            @method('DELETE')
-        </form>
+        @if ($perspective->id)
+            <form id="delete-form" action="{{ route('perspectives.destroy', $perspective) }}" method="POST">
+                @csrf
+                @method('DELETE')
+            </form>
+        @endif
     </div>
 
     <script>
