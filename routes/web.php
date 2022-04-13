@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PerspectiveController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,5 @@ Route::get('/', function () {
 
 Route::get('/schedules/{year?}', [ScheduleController::class, 'index'])->name('schedules.index');
 Route::post('/schedules/{year}', [ScheduleController::class, 'store'])->name('schedules.store');
+
+Route::resource('/perspectives', PerspectiveController::class);

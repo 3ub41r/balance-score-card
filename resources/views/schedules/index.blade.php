@@ -13,6 +13,9 @@
                 <a class="nav-link active" aria-current="page" href="#">Schedule</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="#">Perpectives</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">KPI</a>
             </li>
         </ul>
