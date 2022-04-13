@@ -2,12 +2,6 @@
     <div class="container">
         <x-kpi-tabs />
 
-        <select id="year-select" class="form-select">
-            @for ($i = now()->year; $i > now()->year - 7; $i--)
-                <option value="{{ $i }}"{{ $year == $i ? ' selected' : '' }}>{{ $i }}</option>
-            @endfor
-        </select>
-
         <form action="{{ route('schedules.store', $year) }}" method="POST">
             @csrf
 
@@ -116,7 +110,6 @@
                     </tbody>
                 </table>
             </div>
-
 
             <button class="btn btn-primary">Save</button>
         </form>

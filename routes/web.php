@@ -21,8 +21,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/schedules/{year?}', [ScheduleController::class, 'index'])->name('schedules.index');
-Route::post('/schedules/{year}', [ScheduleController::class, 'store'])->name('schedules.store');
+Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
+Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');
 
 Route::resource('/perspectives', PerspectiveController::class);
 Route::resource('/kpis', KpiController::class);

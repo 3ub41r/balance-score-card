@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
-    public function index($year = null)
+    public function index(Request $request)
     {
-        $year = $year ?? now()->year;
+        $year = $request->session()->get('year') ?? now()->year;
 
         // Get schedules for year
         $schedules = KpiSchedule::where('year_implemented', $year)->get();
@@ -18,8 +18,10 @@ class ScheduleController extends Controller
         return view('schedules/index', compact('year', 'schedules'));
     }
 
-    public function store(Request $request, $year)
+    public function store(Request $request)
     {
+        $year = $request->session()->get('year') ?? now()->year;
+        
         // Loop quarters
         for ($quarter = 1; $quarter <= 4; $quarter++) {
             if (
