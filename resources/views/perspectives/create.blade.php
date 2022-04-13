@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="container">
+    <div class="container my-4">
         <form action="{{ $perspective->id ? route('perspectives.update', $perspective) : route('perspectives.store') }}" method="POST">
             @csrf
 
@@ -7,26 +7,31 @@
                 @method('PUT')
             @endif
 
-            <div class="mb-3">
-                <label for="name" class="form-label">Perspective</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ $perspective->name }}">
-            </div>
-            <div class="mb-3">
-                <label for="code" class="form-label">Code</label>
-                <input type="text" class="form-control" id="code" name="code" value="{{ $perspective->code }}">
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col-2">
+                    <label for="code" class="form-label">Code</label>
+                    <input type="text" class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" id="code" name="code" value="{{ old('code', $perspective->code) }}">
+                    @error('code')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col">
+                    <label for="name" class="form-label">Perspective</label>
+                    <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" value="{{ old('name', $perspective->name) }}">
+                    @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label for="year_implemented">Year Implemented</label>
-                <select id="year_implemented" name="year_implemented" class="form-select" aria-label="Default select example">
-                    @for ($i = now()->year; $i >= now()->year - 7; $i--)
-                        <option value="{{ $i }}"{{ $i == $perspective->year_implemented ? ' selected' : '' }}>{{ $i }}</option>
-                    @endfor
-                </select>
-            </div>
+            <input type="hidden" name="year_implemented" value="{{ session('year') ?? now()->year }}">
 
             <div class="mb-3">
-                <label for="perspective_category_id">Perspective Category</label>
+                <label for="perspective_category_id" class="form-label">Perspective Category</label>
                 <select id="perspective_category_id" name="perspective_category_id" class="form-select" aria-label="Default select example">
                     @foreach ($perspectiveCategories as $perspectiveCategory)
                         <option value="{{ $perspectiveCategory->id }}"{{ $perspectiveCategory->id == $perspective->perspective_category_id ? ' selected' : '' }}>
