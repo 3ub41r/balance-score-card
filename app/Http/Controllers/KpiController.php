@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 
 class KpiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $perspectives = Perspective::orderBy('code')->get();
+        $year = $request->session()->get('year') ?? now()->year;
+        $perspectives = Perspective::where('year_implemented', $year)
+            ->orderBy('code')
+            ->get();
 
         return view('kpis/index', compact('perspectives'));
     }

@@ -11,7 +11,6 @@ class PerspectiveController extends Controller
     public function index(Request $request)
     {
         $year = $request->session()->get('year') ?? now()->year;
-
         $perspectives = Perspective::where('year_implemented', $year)
             ->orderBy('code')
             ->get();
