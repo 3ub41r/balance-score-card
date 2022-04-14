@@ -10,7 +10,7 @@
                 <form action="{{ route('pic.kpis.store') }}" method="POST">
                     @csrf
 
-                    <div class="card table-responsive-md mb-3 shadow">
+                    <div class="card table-responsive-md mb-3">
                         <table class="table mb-0">
                             <thead>
                                 <tr>
