@@ -4,6 +4,7 @@ use App\Http\Controllers\ChangeYearController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\PerspectiveController;
+use App\Http\Controllers\Pic\KpiController as PicKpiController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,8 @@ Route::resource('/kpis', KpiController::class);
 Route::resource('/divisions', DivisionController::class);
 
 Route::get('/change-year/{year}', ChangeYearController::class)->name('change-year');
+
+Route::prefix('/pic')->group(function () {
+    Route::get('/kpis', [PicKpiController::class, 'index'])->name('pic.kpis.index');
+    Route::post('/kpis', [PicKpiController::class, 'store'])->name('pic.kpis.store');
+});
