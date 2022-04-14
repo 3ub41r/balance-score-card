@@ -10,8 +10,8 @@
                 <form action="{{ route('pic.kpis.store') }}" method="POST">
                     @csrf
 
-                    <div class="table-responsive-md mb-3">
-                        <table class="table">
+                    <div class="card table-responsive-md mb-3 shadow">
+                        <table class="table mb-0">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -23,7 +23,7 @@
                             <tbody>
                                 @foreach ($division->kpis as $kpi)
                                     <tr>
-                                        <td>
+                                        <td class="{{ $loop->last ? 'border-bottom-0' : '' }}">
                                             <strong>
                                                 {{ $kpi->code }}: {{ $kpi->name }}
                                             </strong>
@@ -33,7 +33,7 @@
                                             </small>
                                         </td>
                                         @for ($i = 1; $i <= 4; $i++)
-                                            <td>
+                                            <td class="{{ $loop->last ? 'border-bottom-0' : '' }}">
                                                 <div class="d-flex align-items-center">
                                                     <input
                                                         type="text"
