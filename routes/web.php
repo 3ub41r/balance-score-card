@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChangeYearController;
+use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\PerspectiveController;
 use App\Http\Controllers\ScheduleController;
@@ -26,5 +27,6 @@ Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules
 
 Route::resource('/perspectives', PerspectiveController::class);
 Route::resource('/kpis', KpiController::class);
+Route::resource('/divisions', DivisionController::class);
 
 Route::get('/change-year/{year}', ChangeYearController::class)->name('change-year');
