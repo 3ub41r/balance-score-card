@@ -45,6 +45,6 @@ class KpiController extends Controller
             }
         }
 
-        return redirect()->route('pic.kpis.index');
+        return redirect()->route('pic.kpis.index')->with('message', 'KPI updated.');
     }
 }
