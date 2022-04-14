@@ -22,7 +22,7 @@
                                     <select id="pic_staff[{{ $department->id }}]" name="pic_staff[{{ $department->id }}]" class="form-select">
                                         <option value=""></option>
                                         @foreach ($staff as $person)
-                                            <option value="{{ $person->id }}"{{ $department->current_division->pic_staff_id == $person->id ? ' selected' : '' }}>
+                                            <option value="{{ $person->id }}"{{ optional($department->current_division)->pic_staff_id == $person->id ? ' selected' : '' }}>
                                                 {{ $person->name }}
                                             </option>
                                         @endforeach
@@ -32,7 +32,7 @@
                                     <select id="approver_staff[{{ $department->id }}]" name="approver_staff[{{ $department->id }}]" class="form-select">
                                         <option value=""></option>
                                         @foreach ($staff as $person)
-                                            <option value="{{ $person->id }}"{{ $department->current_division->approver_staff_id == $person->id ? ' selected' : '' }}>
+                                            <option value="{{ $person->id }}"{{ optional($department->current_division)->approver_staff_id == $person->id ? ' selected' : '' }}>
                                                 {{ $person->name }}
                                             </option>
                                         @endforeach

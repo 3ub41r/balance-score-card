@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Division;
 use App\Models\Kpi;
 use App\Models\Perspective;
 use Illuminate\Http\Request;
@@ -11,7 +12,10 @@ class KpiController extends Controller
     public function index(Request $request)
     {
         $year = $request->session()->get('year') ?? now()->year;
+
         $perspectives = Perspective::where('year_implemented', $year)
+            ->has('kpis')
+            ->with('kpis')
             ->orderBy('code')
             ->get();
 
@@ -37,50 +41,45 @@ class KpiController extends Controller
         ]);
 
         Kpi::create($request->all());
+
+        return redirect()->route('kpis.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Request $request, Kpi $kpi)
     {
-        //
+        $year = $request->session()->get('year') ?? now()->year;
+        $perspectives = Perspective::orderBy('code')->get();
+        $divisions = Division::where('year_implemented', $year)->get();
+
+        return view('kpis/create', compact('perspectives', 'kpi', 'divisions'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Kpi $kpi)
     {
-        //
+        $request->validate([
+            'code' => 'required',
+            'name' => 'required',
+            'od' => 'required',
+            'target' => 'required|numeric',
+            // 'perspective_id' => 'required',
+        ]);
+
+        $kpi->update($request->except('divisions'));
+
+        // Assign division
+        $kpi->divisions()->sync($request->input('divisions'));
+
+        return redirect()->route('kpis.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Kpi $kpi)
     {
-        //
+        $kpi->delete();
+        return redirect()->route('kpis.index');
     }
 }

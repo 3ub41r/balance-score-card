@@ -10,4 +10,9 @@ class Kpi extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function divisions()
+    {
+        return $this->belongsToMany(Division::class, 'division_kpis');
+    }
 }

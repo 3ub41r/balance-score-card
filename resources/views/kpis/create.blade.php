@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="container">
+    <div class="container my-4">
         <form action="{{ $kpi->id ? route('kpis.update', $kpi) : route('kpis.store') }}" method="POST">
             @csrf
 
@@ -29,7 +29,7 @@
             </div>
             
             <div class="mb-3">
-                <label class="mb-2" for="floatingTextarea">Operational Definition (OD)</label>
+                <label class="form-label" for="floatingTextarea">Operational Definition (OD)</label>
                 <textarea name="od" class="form-control{{ $errors->has('od') ? ' is-invalid' : '' }}" id="floatingTextarea" style="height: 200px">{{ old('od', $kpi->od) }}</textarea>
 
                 @error('od')
@@ -47,7 +47,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="perspective_id">Perspective Category</label>
+                <label for="perspective_id" class="form-label">Perspective Category</label>
                 <select id="perspective_id" name="perspective_id" class="form-select" aria-label="Default select example">
                     @foreach ($perspectives as $perspective)
                         <option value="{{ $perspective->id }}"{{ $perspective->id == $kpi->perspective_id ? ' selected' : '' }}>
@@ -55,6 +55,26 @@
                         </option>
                     @endforeach
                 </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Assign Division(s)
+                </label>
+                @foreach ($divisions as $division)
+                    <div class="form-check mb-2">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value="{{ $division->id }}"
+                            name="divisions[]"
+                            id="division-[{{ $division->id }}]"
+                            {{ $kpi->divisions->contains('id', $division->id) ? ' checked' : '' }}>
+                        <label class="form-check-label" for="division-[{{ $division->id }}]">
+                            {{ $division->department->name }}
+                        </label>
+                    </div>
+                @endforeach
             </div>
 
             <button type="submit" class="btn btn-primary">
@@ -69,7 +89,7 @@
         </form>
 
         @if ($kpi->id)
-            <form id="delete-form" action="{{ route('perspectives.destroy', $kpi) }}" method="POST">
+            <form id="delete-form" action="{{ route('kpis.destroy', $kpi) }}" method="POST">
                 @csrf
                 @method('DELETE')
             </form>

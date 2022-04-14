@@ -15,4 +15,9 @@ class Perspective extends Model
     {
         return $this->belongsTo(PerspectiveCategory::class);
     }
+
+    public function kpis()
+    {
+        return $this->hasMany(Kpi::class);
+    }
 }
