@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PersepectiveCategorySeeder::class,
             StaffSeeder::class,
+            DepartmentSeeder::class,
         ]);
     }
 }

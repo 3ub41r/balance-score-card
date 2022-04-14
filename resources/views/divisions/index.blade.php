@@ -2,26 +2,49 @@
     <div class="container">
         <x-kpi-tabs />
 
-        @if ($divisions->isEmpty())
-            <div class="text-center my-5">
-                <h5 class="fw-bold my-3">You have not added any divisions.</h5>
+        <form action="{{ route('divisions.store') }}" method="POST">
+            @csrf
 
-                <a href="{{ route('divisions.create') }}" class="btn btn-success my-3">
-                    New Division
-                </a>
+            <div class="table-responsive-md mb-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">PIC</th>
+                            <th scope="col">Approver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($departments as $department)
+                            <tr>
+                                <th>{{ $department->name }}</th>
+                                <td>
+                                    <select id="pic_staff[{{ $department->id }}]" name="pic_staff[{{ $department->id }}]" class="form-select">
+                                        <option value=""></option>
+                                        @foreach ($staff as $person)
+                                            <option value="{{ $person->id }}"{{ $department->current_division->pic_staff_id == $person->id ? ' selected' : '' }}>
+                                                {{ $person->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="approver_staff[{{ $department->id }}]" name="approver_staff[{{ $department->id }}]" class="form-select">
+                                        <option value=""></option>
+                                        @foreach ($staff as $person)
+                                            <option value="{{ $person->id }}"{{ $department->current_division->approver_staff_id == $person->id ? ' selected' : '' }}>
+                                                {{ $person->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-        @else
-            <a href="{{ route('divisions.create') }}" class="btn btn-success mb-3">
-                New Division
-            </a>
-
-            <div class="list-group mb-4">
-                @foreach ($divisions as $division)
-                    <a href="{{ route('divisions.edit', $division) }}" class="list-group-item list-group-item-action">
-                        {{ $division->name }}
-                    </a>
-                @endforeach
-            </div>        
-        @endif
+            
+            <button class="btn btn-primary">Save</button>
+        </form>
     </div>
 </x-layout>

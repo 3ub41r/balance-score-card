@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Division;
 use App\Models\Staff;
 use Illuminate\Http\Request;
@@ -10,9 +11,10 @@ class DivisionController extends Controller
 {
     public function index()
     {
-        $divisions = Division::orderBy('name')->get();
+        $departments = Department::orderBy('name')->get();
+        $staff = Staff::orderBy('name')->get();
 
-        return view('divisions/index', compact('divisions'));
+        return view('divisions/index', compact('departments', 'staff'));
     }
 
     public function create()
@@ -25,14 +27,18 @@ class DivisionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'pic_staff_id' => 'required',
-            'approver_staff_id' => 'required',
-            'year_implemented' => 'required',
-        ]);
+        $year = $request->session()->get('year') ?? now()->year;
 
-        Division::create($request->all());
+        // Loop departments
+        foreach (Department::all() as $department) {
+            // Insert into divisions
+            $department->divisions()->updateOrCreate([
+                'year_implemented' => $year,
+            ], [
+                'pic_staff_id' => $request->input('pic_staff.' . $department->id),
+                'approver_staff_id' => $request->input('approver_staff.' . $department->id),
+            ]);           
+        }
 
         return redirect()->route('divisions.index');
     }

@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\Staff;
+use App\Models\Department;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddStaffColumnsInDivisions extends Migration
+class RemoveDepartmentFieldsFromDivisions extends Migration
 {
     /**
      * Run the migrations.
@@ -15,13 +15,10 @@ class AddStaffColumnsInDivisions extends Migration
     public function up()
     {
         Schema::table('divisions', function (Blueprint $table) {
-            $table->foreignId('pic_staff_id')
+            $table->dropColumn('name');
+            $table->foreignIdFor(Department::class)
                 ->nullable()
-                ->constrained('staff')
-                ->cascadeOnDelete();
-            $table->foreignId('approver_staff_id')
-                ->nullable()
-                ->constrained('staff')
+                ->constrained()
                 ->cascadeOnDelete();
         });
     }
@@ -34,9 +31,7 @@ class AddStaffColumnsInDivisions extends Migration
     public function down()
     {
         Schema::table('divisions', function (Blueprint $table) {
-            $table->dropForeign(['pic_staff_id']);
-            $table->dropForeign(['approver_staff_id']);
-            $table->dropColumn('pic_staff_id', 'approver_staff_id');
+            //
         });
     }
 }
