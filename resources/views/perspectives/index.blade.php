@@ -15,13 +15,18 @@
                 New Perspective
             </a>
 
-            <div class="list-group mb-4">
-                @foreach ($perspectives as $perspective)
-                    <a href="{{ route('perspectives.edit', $perspective) }}" class="list-group-item list-group-item-action">
-                        {{ $perspective->code }}: {{ $perspective->name }}
-                    </a>
-                @endforeach
-            </div>        
+            @foreach ($perspectives->groupBy('perspective_category.name') as $perspectiveCategory => $perspectives)
+                <h6 class="mb-3">{{ $perspectiveCategory }}</h6>
+
+                <div class="list-group mb-4">
+                    @foreach ($perspectives as $perspective)
+                        <a href="{{ route('perspectives.edit', $perspective) }}" class="list-group-item list-group-item-action">
+                            {{ $perspective->code }}: {{ $perspective->name }}
+                        </a>
+                    @endforeach
+                </div>
+            @endforeach
+
         @endif
     </div>
 </x-layout>

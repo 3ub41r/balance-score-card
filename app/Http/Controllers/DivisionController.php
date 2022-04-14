@@ -17,14 +17,6 @@ class DivisionController extends Controller
         return view('divisions/index', compact('departments', 'staff'));
     }
 
-    public function create()
-    {
-        $division = new Division();
-        $staff = Staff::orderBy('name')->get();
-
-        return view('divisions/create', compact('division', 'staff'));
-    }
-
     public function store(Request $request)
     {
         $year = $request->session()->get('year') ?? now()->year;
@@ -40,38 +32,6 @@ class DivisionController extends Controller
             ]);           
         }
 
-        return redirect()->route('divisions.index');
-    }
-
-    public function show(Division $division)
-    {
-        //
-    }
-
-    public function edit(Division $division)
-    {
-        $staff = Staff::orderBy('name')->get();
-
-        return view('divisions/create', compact('division', 'staff'));
-    }
-
-    public function update(Request $request, Division $division)
-    {
-        $request->validate([
-            'name' => 'required',
-            'pic_staff_id' => 'required',
-            'approver_staff_id' => 'required',
-            'year_implemented' => 'required',
-        ]);
-
-        $division->update($request->all());
-
-        return redirect()->route('divisions.index');
-    }
-
-    public function destroy(Division $division)
-    {
-        $division->delete();
         return redirect()->route('divisions.index');
     }
 }

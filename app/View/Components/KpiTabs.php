@@ -11,6 +11,7 @@ class KpiTabs extends Component
     public function __construct()
     {
         $this->links = [
+            'Divisions' => route('divisions.index'),
             'Schedule' => route('schedules.index'),
             'Perspectives' => route('perspectives.index'),
             'KPI' => route('kpis.index'),

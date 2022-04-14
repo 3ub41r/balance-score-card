@@ -12,6 +12,7 @@ class PerspectiveController extends Controller
     {
         $year = $request->session()->get('year') ?? now()->year;
         $perspectives = Perspective::where('year_implemented', $year)
+            ->with('perspective_category')
             ->orderBy('code')
             ->get();
 

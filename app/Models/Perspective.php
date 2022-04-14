@@ -10,4 +10,9 @@ class Perspective extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function perspective_category()
+    {
+        return $this->belongsTo(PerspectiveCategory::class);
+    }
 }
