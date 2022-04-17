@@ -38,13 +38,6 @@
                     </div>
                 @enderror
             </div>
-            
-            <div class="row mb-3">
-                <div class="col-2">
-                    <label for="target" class="form-label">Target</label>
-                    <input type="text" class="form-control" id="target" name="target" value="{{ old('target', $kpi->target) }}">
-                </div>
-            </div>
 
             <div class="mb-3">
                 <label for="perspective_id" class="form-label">Perspective Category</label>
@@ -58,6 +51,11 @@
             </div>
 
             <div class="mb-3">
+                @error('divisions')
+                    <small class="text-danger d-block mb-2">
+                        You need to pick at least ONE division responsible for this KPI.
+                    </small>
+                @enderror
                 <label class="form-label">
                     Assign Division(s)
                 </label>

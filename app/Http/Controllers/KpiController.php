@@ -40,11 +40,24 @@ class KpiController extends Controller
             'code' => 'required',
             'name' => 'required',
             'od' => 'required',
-            'target' => 'required|numeric',
+            'divisions' => 'required',
             // 'perspective_id' => 'required',
         ]);
 
-        Kpi::create($request->all());
+        $divisionTargets = [];
+        $totalTarget = 0;
+
+        foreach ($request->input('divisions') as $division) {
+            // Assign division
+            $target = $request->input('targets.' . $division);
+            $totalTarget += $target;
+
+            $divisionTargets[$division] = ['target' => $target];
+        }
+
+        $kpi = Kpi::create($request->except('divisions', 'targets') + ['target' => $totalTarget]);
+        
+        $kpi->divisions()->sync($divisionTargets);
 
         return redirect()->route('kpis.index');
     }
@@ -72,22 +85,24 @@ class KpiController extends Controller
             'code' => 'required',
             'name' => 'required',
             'od' => 'required',
-            'target' => 'required|numeric',
+            'divisions' => 'required',
             // 'perspective_id' => 'required',
         ]);
 
-        $kpi->update($request->except('divisions', 'targets'));
-
-        $kpi->divisions()->detach();
+        $divisionTargets = [];
+        $totalTarget = 0;
 
         foreach ($request->input('divisions') as $division) {
             // Assign division
-            $kpi
-                ->divisions()
-                ->attach($division, [
-                    'target' => $request->input('targets.' . $division)
-                ]);
+            $target = $request->input('targets.' . $division);
+            $totalTarget += $target;
+
+            $divisionTargets[$division] = ['target' => $target];
         }
+
+        $kpi->divisions()->sync($divisionTargets);
+
+        $kpi->update($request->except('divisions', 'targets') + ['target' => $totalTarget]);
 
         return redirect()->route('kpis.index');
     }
