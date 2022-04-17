@@ -19,7 +19,9 @@
                     <div class="mb-4">
                         <h6 class="mb-3">{{ $perspective->code }}: {{ $perspective->name }}</h6>
 
-                        @if ($perspective->kpis->isNotEmpty())
+                        @if ($perspective->kpis->isEmpty())
+                            <p class="text-muted">No KPI yet.</p>
+                        @else
                             <div class="list-group">
                                 @foreach ($perspective->kpis as $kpi)
                                     <a href="{{ route('kpis.edit', $kpi) }}" class="list-group-item list-group-item-action">

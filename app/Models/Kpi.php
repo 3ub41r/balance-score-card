@@ -13,6 +13,6 @@ class Kpi extends Model
 
     public function divisions()
     {
-        return $this->belongsToMany(Division::class, 'division_kpis');
+        return $this->belongsToMany(Division::class, 'division_kpis')->withPivot('target');
     }
 }

@@ -14,7 +14,6 @@ class KpiController extends Controller
         $year = $request->session()->get('year') ?? now()->year;
 
         $perspectives = Perspective::where('year_implemented', $year)
-            ->has('kpis')
             ->with('kpis')
             ->orderBy('code')
             ->get();
@@ -22,12 +21,17 @@ class KpiController extends Controller
         return view('kpis/index', compact('perspectives'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $perspectives = Perspective::orderBy('code')->get();
+        $year = $request->session()->get('year', now()->year);
+
+        $perspectives = Perspective::orderBy('code')
+            ->where('year_implemented', $year)
+            ->get();
+        $divisions = Division::where('year_implemented', $year)->get();
         $kpi = new Kpi();
 
-        return view('kpis/create', compact('perspectives', 'kpi'));
+        return view('kpis/create', compact('perspectives', 'kpi', 'divisions'));
     }
 
     public function store(Request $request)
@@ -53,7 +57,10 @@ class KpiController extends Controller
     public function edit(Request $request, Kpi $kpi)
     {
         $year = $request->session()->get('year') ?? now()->year;
-        $perspectives = Perspective::orderBy('code')->get();
+
+        $perspectives = Perspective::orderBy('code')
+            ->where('year_implemented', $year)
+            ->get();
         $divisions = Division::where('year_implemented', $year)->get();
 
         return view('kpis/create', compact('perspectives', 'kpi', 'divisions'));
@@ -69,10 +76,18 @@ class KpiController extends Controller
             // 'perspective_id' => 'required',
         ]);
 
-        $kpi->update($request->except('divisions'));
+        $kpi->update($request->except('divisions', 'targets'));
 
-        // Assign division
-        $kpi->divisions()->sync($request->input('divisions'));
+        $kpi->divisions()->detach();
+
+        foreach ($request->input('divisions') as $division) {
+            // Assign division
+            $kpi
+                ->divisions()
+                ->attach($division, [
+                    'target' => $request->input('targets.' . $division)
+                ]);
+        }
 
         return redirect()->route('kpis.index');
     }

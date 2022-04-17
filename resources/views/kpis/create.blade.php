@@ -61,20 +61,33 @@
                 <label class="form-label">
                     Assign Division(s)
                 </label>
-                @foreach ($divisions as $division)
-                    <div class="form-check mb-2">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value="{{ $division->id }}"
-                            name="divisions[]"
-                            id="division-[{{ $division->id }}]"
-                            {{ $kpi->divisions->contains('id', $division->id) ? ' checked' : '' }}>
-                        <label class="form-check-label" for="division-[{{ $division->id }}]">
-                            {{ $division->department->name }}
-                        </label>
-                    </div>
-                @endforeach
+                <div class="list-group">
+                    @foreach ($divisions as $division)
+                        <div class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                            <div class="form-check my-0">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    value="{{ $division->id }}"
+                                    name="divisions[]"
+                                    id="division-[{{ $division->id }}]"
+                                    {{ $kpi->divisions->contains('id', $division->id) ? ' checked' : '' }}>
+                                <label class="form-check-label" for="division-[{{ $division->id }}]">
+                                    {{ $division->department->name }}
+                                </label>
+                            </div>
+                            <div>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="targets[{{ $division->id }}]"
+                                    id="target-{{ $division->id }}"
+                                    placeholder="Target"
+                                    value="{{ old('targets.' . $division->id, optional(optional($kpi->divisions->firstWhere('id', $division->id))->pivot)->target) }}">
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">
