@@ -29,7 +29,7 @@
                                             </strong>
                                             <p class="text-muted my-2">{{ $kpi->od }}</p>
                                             <small class="d-block mt-2">
-                                                {{ number_format($kpi->target, 2) }}
+                                                {{ number_format($kpi->pivot->target, 2) }}
                                             </small>
                                         </td>
                                         @for ($i = 1; $i <= 4; $i++)
