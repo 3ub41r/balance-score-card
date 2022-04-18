@@ -6,14 +6,11 @@ use Illuminate\View\Component;
 
 class Base extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $title;
+
+    public function __construct($title = null)
     {
-        //
+        $this->title = $title ?? config('app.name');
     }
 
     /**
