@@ -15,4 +15,9 @@ class Kpi extends Model
     {
         return $this->belongsToMany(Division::class, 'division_kpis')->withPivot('target');
     }
+
+    public function kpi_performances()
+    {
+        return $this->hasMany(KpiPerformance::class);
+    }
 }

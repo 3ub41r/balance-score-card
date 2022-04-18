@@ -10,20 +10,20 @@
                 <form action="{{ route('pic.kpis.store') }}" method="POST">
                     @csrf
 
-                    <div class="card table-responsive-md mb-3">
-                        <table class="table table-hover mb-0">
+                    <div class="table-responsive-md mb-3">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th></th>
                                     @for ($i = 1; $i <= 4; $i++)
-                                        <th>Q{{ $i }}</th>
+                                        <th class="{{ $currentQuarter && $currentQuarter->quarter == $i ? 'table-primary shadow' : '' }}">Q{{ $i }}</th>
                                     @endfor
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($division->kpis as $kpi)
                                     <tr>
-                                        <td class="{{ $loop->last ? 'border-bottom-0' : '' }}">
+                                        <td>
                                             <strong>
                                                 {{ $kpi->code }}: {{ $kpi->name }}
                                             </strong>
@@ -33,17 +33,33 @@
                                             </small>
                                         </td>
                                         @for ($i = 1; $i <= 4; $i++)
-                                            <td class="{{ $loop->last ? 'border-bottom-0' : '' }}">
-                                                <div class="d-flex align-items-center">
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        name="achievements[{{ $division->id }}][{{ $kpi->id }}][{{ $i }}]"
-                                                        value="{{ optional($division->kpi_performances()->where('kpi_id', $kpi->id)->where('quarter', $i)->first())->achievement }}">
-                                                    <button class="btn btn-link">
-                                                        Upload
-                                                    </button>
-                                                </div>
+                                            <td class="{{ $currentQuarter && $currentQuarter->quarter == $i ? 'table-primary shadow' : '' }}">
+                                                @if ($currentQuarter && $currentQuarter->quarter == $i)
+                                                    <div class="d-flex align-items-center">
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            name="achievements[{{ $division->id }}][{{ $kpi->id }}][{{ $i }}]"
+                                                            value="{{ optional($division->kpi_performances()->where('kpi_id', $kpi->id)->where('quarter', $i)->first())->achievement }}">
+                                                        <button class="btn btn-link">
+                                                            Upload
+                                                        </button>
+                                                    </div>
+                                                @else
+                                                    @php
+                                                        $achievement = $kpi
+                                                            ->kpi_performances()
+                                                            ->where('division_id', $division->id)
+                                                            ->where('quarter', $i)
+                                                            ->first();
+                                                    @endphp
+
+                                                    @if ($achievement)
+                                                        <span class="text-muted">
+                                                            {{ $achievement->achievement }}
+                                                        </span>
+                                                    @endif
+                                                @endif
                                             </td>
                                         @endfor
                                     </tr>

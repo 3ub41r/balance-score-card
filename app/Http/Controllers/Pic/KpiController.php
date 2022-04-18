@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pic;
 
 use App\Http\Controllers\Controller;
 use App\Models\KpiPerformance;
+use App\Models\KpiSchedule;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,11 @@ class KpiController extends Controller
     {
         $year = $request->session()->get('year') ?? now()->year;
 
+        // Get current quarter
+        $currentQuarter = KpiSchedule::whereRaw('now() between key_in_starts_on and key_in_ends_on')
+            ->orderBy('key_in_starts_on')
+            ->first();
+
         // Dummy
         $staff = Staff::find(1);
 
@@ -21,7 +27,7 @@ class KpiController extends Controller
             ->where('year_implemented', $year)
             ->get();
 
-        return view('pic/kpis/index', compact('divisions'));
+        return view('pic/kpis/index', compact('divisions', 'currentQuarter'));
     }
 
     public function store(Request $request)
