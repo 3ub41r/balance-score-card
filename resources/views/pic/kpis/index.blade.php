@@ -35,7 +35,7 @@
                                         @for ($i = 1; $i <= 4; $i++)
                                             <td class="{{ $currentQuarter && $currentQuarter->quarter == $i ? 'table-primary shadow' : '' }}">
                                                 @if ($currentQuarter && $currentQuarter->quarter == $i)
-                                                    <div class="d-flex align-items-center">
+                                                    <div class="d-flex align-items-center flex-wrap flex-md-nowrap">
                                                         <input
                                                             type="text"
                                                             class="form-control"
