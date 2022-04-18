@@ -23,6 +23,7 @@ class KpiController extends Controller
         $staff = Staff::find(1);
 
         $divisions = $staff->approver_divisions()
+            ->has('kpi_statuses')
             ->with('department', 'kpis')
             ->where('year_implemented', $year)
             ->get();

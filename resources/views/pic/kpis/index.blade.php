@@ -38,7 +38,7 @@
                                             </td>
                                             @for ($i = 1; $i <= 4; $i++)
                                                 <td class="{{ $currentQuarter && $currentQuarter->quarter == $i ? 'table-primary' : '' }}">
-                                                    @if ($currentQuarter && $currentQuarter->quarter == $i && optional($kpiStatus)->slug != 'submitted')
+                                                    @if ($currentQuarter && $currentQuarter->quarter == $i && !$kpiStatus)
                                                         <div class="d-flex align-items-center flex-wrap flex-md-nowrap">
                                                             <input
                                                                 type="text"
