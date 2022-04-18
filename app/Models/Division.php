@@ -39,6 +39,7 @@ class Division extends Model
         return $this
             ->kpi_statuses()
             ->wherePivot('quarter', $quarter)
+            ->latest()
             ->first();
     }
 
@@ -51,5 +52,16 @@ class Division extends Model
         $this
             ->kpi_statuses()
             ->attach(1, ['quarter' => $quarter->quarter]);
+    }
+    
+    public function markKpisReviewed()
+    {
+        $quarter = KpiSchedule::whereRaw('now() between key_in_starts_on and key_in_ends_on')
+            ->orderBy('key_in_starts_on')
+            ->first();
+
+        $this
+            ->kpi_statuses()
+            ->attach(2, ['quarter' => $quarter->quarter]);
     }
 }

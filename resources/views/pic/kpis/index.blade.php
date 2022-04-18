@@ -1,5 +1,5 @@
 <x-pic-layout>
-    <div class="container my-4">
+    <div x-data="" class="container my-4">
         @if ($divisions->isEmpty())
         @else
             @foreach ($divisions as $division)
@@ -38,7 +38,7 @@
                                             </td>
                                             @for ($i = 1; $i <= 4; $i++)
                                                 <td class="{{ $currentQuarter && $currentQuarter->quarter == $i ? 'table-primary' : '' }}">
-                                                    @if ($currentQuarter && $currentQuarter->quarter == $i && $kpiStatus->slug != 'submitted')
+                                                    @if ($currentQuarter && $currentQuarter->quarter == $i && optional($kpiStatus)->slug != 'submitted')
                                                         <div class="d-flex align-items-center flex-wrap flex-md-nowrap">
                                                             <input
                                                                 type="text"
@@ -74,7 +74,9 @@
         
                         @if (!$kpiStatus)
                             <button class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-link" x-on:click="submitKpi({{ $division->id }})">
+                            <button x-on:click="if (confirm('Are you sure you want to submit these KPIs?')) { $refs.submitForm{{ $division->id }}.submit(); }"
+                                type="button"
+                                class="btn btn-link">
                                 Submit
                             </button>
                         @else
@@ -85,22 +87,11 @@
                         @endif
                     </form>
 
-                    <form id="submit-form-{{ $division->id }}" action="{{ route('kpis.submit', $division) }}" method="POST">
+                    <form x-ref="submitForm{{ $division->id }}" action="{{ route('pic.kpis.submit', $division) }}" method="POST">
                         @csrf
                     </form>
                 </div>
             @endforeach
         @endif
     </div>
-
-    @push('scripts')
-        <script>
-            function submitKpi(divisionId)
-            {
-                if (confirm('Are you sure you want to submit these KPIs?')) {
-                    document.getElementById('submit-form-' + divisionId).submit();
-                }
-            }
-        </script>
-    @endpush
 </x-pic-layout>

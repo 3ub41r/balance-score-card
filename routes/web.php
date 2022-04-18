@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Approver\KpiController as ApproverKpiController;
 use App\Http\Controllers\ChangeYearController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\KpiController;
@@ -36,5 +37,13 @@ Route::prefix('/pic')->group(function () {
     Route::get('/kpis', [PicKpiController::class, 'index'])->name('pic.kpis.index');
     Route::post('/kpis', [PicKpiController::class, 'store'])->name('pic.kpis.store');
 
-    Route::post('/kpis/{division}/submit', [PicKpiController::class, 'submit'])->name('kpis.submit');
+    Route::post('/kpis/{division}/submit', [PicKpiController::class, 'submit'])->name('pic.kpis.submit');
+});
+
+Route::prefix('/approver')->group(function () {
+    Route::get('/kpis', [ApproverKpiController::class, 'index'])->name('approver.kpis.index');
+    Route::post('/kpis/{division}/approve', [ApproverKpiController::class, 'approve'])->name('approver.kpis.approve');
+    // Route::post('/kpis', [PicKpiController::class, 'store'])->name('approver.kpis.store');
+
+    // Route::post('/kpis/{division}/submit', [PicKpiController::class, 'submit'])->name('approver.kpis.submit');
 });
