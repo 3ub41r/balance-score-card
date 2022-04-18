@@ -79,6 +79,7 @@
                             </button>
                         @else
                             <small class="text-muted">
+                                <i class="bi bi-check-circle"></i>
                                 {{ $kpiStatus->name }} {{ $kpiStatus->pivot->created_at->diffForHumans() }}
                             </small>
                         @endif
