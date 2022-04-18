@@ -61,9 +61,12 @@
                 </label>
                 <div class="list-group">
                     @foreach ($divisions as $division)
-                        <div class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                        <div 
+                            x-data="{ isChecked:  {{ $kpi->divisions->contains('id', $division->id) ? 'true' : 'false' }} }"
+                            class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
                             <div class="form-check my-0">
                                 <input
+                                    x-model="isChecked"
                                     class="form-check-input"
                                     type="checkbox"
                                     value="{{ $division->id }}"
@@ -76,6 +79,7 @@
                             </div>
                             <div>
                                 <input
+                                    x-show="isChecked"
                                     type="text"
                                     class="form-control"
                                     name="targets[{{ $division->id }}]"
@@ -107,13 +111,15 @@
         @endif
     </div>
 
-    <script>
-        const deleteBtn = document.querySelector('#delete-btn');
-        
-        deleteBtn.addEventListener('click', (event) => {
-            if(confirm('Are you sure?')) {
-                document.querySelector('#delete-form').submit();
-            }
-        });
-    </script>
+    @push('scripts')
+        <script>
+            const deleteBtn = document.querySelector('#delete-btn');
+            
+            deleteBtn.addEventListener('click', (event) => {
+                if(confirm('Are you sure?')) {
+                    document.querySelector('#delete-form').submit();
+                }
+            });
+        </script>
+    @endpush
 </x-layout>
