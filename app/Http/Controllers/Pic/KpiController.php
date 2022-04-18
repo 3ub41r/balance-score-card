@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pic;
 
 use App\Http\Controllers\Controller;
+use App\Models\Division;
 use App\Models\KpiPerformance;
 use App\Models\KpiSchedule;
 use App\Models\Staff;
@@ -52,5 +53,11 @@ class KpiController extends Controller
         }
 
         return redirect()->route('pic.kpis.index')->with('message', 'KPI updated.');
+    }
+
+    public function submit(Division $division)
+    {
+        $division->submitKpis();
+        return redirect()->back()->with('message', 'KPIs submitted.');
     }
 }

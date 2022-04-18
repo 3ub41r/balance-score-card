@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PersepectiveCategorySeeder::class,
             StaffSeeder::class,
             DepartmentSeeder::class,
+            KpiStatusSeeder::class,
         ]);
     }
 }

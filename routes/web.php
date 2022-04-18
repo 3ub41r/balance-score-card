@@ -35,4 +35,6 @@ Route::get('/change-year/{year}', ChangeYearController::class)->name('change-yea
 Route::prefix('/pic')->group(function () {
     Route::get('/kpis', [PicKpiController::class, 'index'])->name('pic.kpis.index');
     Route::post('/kpis', [PicKpiController::class, 'store'])->name('pic.kpis.store');
+
+    Route::post('/kpis/{division}/submit', [PicKpiController::class, 'submit'])->name('kpis.submit');
 });
