@@ -44,6 +44,6 @@ class ScheduleController extends Controller
             ]);
         }
 
-        return redirect()->route('schedules.index', $year);
+        return redirect()->route('schedules.index', $year)->with('message', 'Schedule updated.');
     }
 }

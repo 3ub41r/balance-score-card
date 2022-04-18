@@ -6,7 +6,7 @@
             @csrf
 
             <div class="table-responsive-md mb-3">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col"></th>

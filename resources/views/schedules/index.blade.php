@@ -2,7 +2,7 @@
     <div class="container">
         <x-kpi-tabs />
 
-        <form action="{{ route('schedules.store', $year) }}" method="POST">
+        <form action="{{ route('schedules.store') }}" method="POST">
             @csrf
 
             <div class="table-responsive-md mb-3">
