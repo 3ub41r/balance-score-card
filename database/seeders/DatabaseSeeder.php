@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             StaffSeeder::class,
             DepartmentSeeder::class,
             KpiStatusSeeder::class,
+            KpiSeeder::class,
         ]);
     }
 }
