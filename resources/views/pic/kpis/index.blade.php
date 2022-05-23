@@ -1,7 +1,12 @@
 <x-pic-layout>
     <div class="container my-4">
         @if ($divisions->isEmpty())
+            <h5 class="text-center my-5">
+                There are no KPIs set for the selected year.
+            </h5>
         @else
+            <h3 class="mb-3 pb-3 border-bottom">Update KPIs</h3>
+
             @foreach ($divisions as $division)
                 @php
                     $kpiStatus = $division->kpiStatusByQuarter($currentQuarter->quarter);

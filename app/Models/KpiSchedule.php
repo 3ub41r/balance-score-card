@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class KpiSchedule extends Model
 {
-    use HasFactory;
+    protected $casts = [
+        'key_in_starts_on' => 'date',
+        'key_in_ends_on' => 'date',
+    ];
 
     protected $guarded = [];
 }

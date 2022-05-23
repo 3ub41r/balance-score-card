@@ -1,7 +1,12 @@
-<x-approver-layout>
-    <div x-data="" class="container my-4">
+<x-pic-layout>
+    <div class="container my-4">
         @if ($divisions->isEmpty())
+            <h5 class="text-center my-5">
+                There are no KPIs that require your approval for the selected year.
+            </h5>
         @else
+            <h3 class="mb-3 pb-3 border-bottom">Approve KPIs</h3>
+
             @foreach ($divisions as $division)
                 @php
                     $kpiStatus = $division->kpiStatusByQuarter($currentQuarter->quarter);
@@ -44,7 +49,7 @@
                                                 @endphp
 
                                                 @if ($achievement)
-                                                    <span class="text-muted">
+                                                    <span>
                                                         {{ $achievement->achievement }}
                                                     </span>
                                                 @endif
@@ -80,4 +85,4 @@
             @endforeach
         @endif
     </div>
-</x-approver-layout>
+</x-pic-layout>

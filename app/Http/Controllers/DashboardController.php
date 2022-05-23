@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KpiSchedule;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -10,37 +11,30 @@ class DashboardController extends Controller
     {
         $year = session('year') ?? now()->year;
 
+        $keyInQuarter = KpiSchedule::whereRaw('now() between key_in_starts_on and key_in_ends_on')
+            ->orderBy('key_in_starts_on')
+            ->first();
+
+        $approvalQuarter = KpiSchedule::whereRaw('now() between approval_starts_on and approval_ends_on')
+            ->orderBy('approval_starts_on')
+            ->first();
+
         $staff = $request->user()
             ->staff()
             ->with([
                 'pic_divisions' => function ($query) use ($year) {
                     $query
                         ->where('year_implemented', $year)
-                        ->with([
-                            'kpis' => function ($query) use ($year) {
-                                $query->whereHas('perspective', function ($query) use ($year) {
-                                    $query->where('year_implemented', $year);
-                                });
-                            },
-                            'department',
-                        ]);
+                        ->with('department');
                 },
                 'approver_divisions' => function ($query) use ($year) {
                     $query
                         ->where('year_implemented', $year)
-                        ->with([
-                            'kpis' => function ($query) use ($year) {
-                                $query->whereHas('perspective', function ($query) use ($year) {
-                                    $query->where('year_implemented', $year);
-                                });
-                            },
-                            'department',
-                        ]);
+                        ->with('department');
                 },
             ])
             ->first();
 
-        // return $staff;
-        return view('dashboard', compact('staff'));
+        return view('dashboard', compact('staff', 'keyInQuarter', 'approvalQuarter'));
     }
 }

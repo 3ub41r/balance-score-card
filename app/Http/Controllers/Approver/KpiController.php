@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Approver;
 use App\Http\Controllers\Controller;
 use App\Models\Division;
 use App\Models\KpiSchedule;
-use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class KpiController extends Controller
@@ -15,15 +14,14 @@ class KpiController extends Controller
         $year = $request->session()->get('year') ?? now()->year;
 
         // Get current quarter
-        $currentQuarter = KpiSchedule::whereRaw('now() between key_in_starts_on and key_in_ends_on')
-            ->orderBy('key_in_starts_on')
+        $currentQuarter = KpiSchedule::whereRaw('now() between approval_starts_on and approval_ends_on')
+            ->orderBy('approval_starts_on')
             ->first();
 
-        // Dummy
-        $staff = Staff::find(1);
+        $staff = $request->user()->staff;
 
         $divisions = $staff->approver_divisions()
-            ->has('kpi_statuses')
+            // ->has('kpi_statuses')
             ->with('department', 'kpis')
             ->where('year_implemented', $year)
             ->get();

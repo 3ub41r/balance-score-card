@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Division;
 use App\Models\KpiPerformance;
 use App\Models\KpiSchedule;
-use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class KpiController extends Controller
@@ -20,7 +19,6 @@ class KpiController extends Controller
             ->orderBy('key_in_starts_on')
             ->first();
 
-        // Dummy
         $staff = $request->user()->staff;
 
         $divisions = $staff->pic_divisions()
