@@ -21,7 +21,7 @@ class KpiController extends Controller
             ->first();
 
         // Dummy
-        $staff = Staff::find(1);
+        $staff = $request->user()->staff;
 
         $divisions = $staff->pic_divisions()
             ->with('department', 'kpis')

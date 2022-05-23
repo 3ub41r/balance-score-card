@@ -1,5 +1,5 @@
 <x-pic-layout>
-    <div x-data="" class="container my-4">
+    <div class="container my-4">
         @if ($divisions->isEmpty())
         @else
             @foreach ($divisions as $division)
@@ -32,23 +32,35 @@
                                                     {{ $kpi->code }}: {{ $kpi->name }}
                                                 </strong>
                                                 <p class="text-muted my-2">{{ $kpi->od }}</p>
-                                                <small class="d-block mt-2">
-                                                    {{ number_format($kpi->pivot->target, 2) }}
-                                                </small>
                                             </td>
                                             @for ($i = 1; $i <= 4; $i++)
                                                 <td class="{{ $currentQuarter && $currentQuarter->quarter == $i ? 'table-primary' : '' }}">
                                                     @if ($currentQuarter && $currentQuarter->quarter == $i && !$kpiStatus)
+                                                        @php
+                                                            $performance = $division->kpi_performances()->where('kpi_id', $kpi->id)->where('quarter', $i)->first();
+                                                        @endphp
                                                         <div class="d-flex align-items-center flex-wrap flex-md-nowrap">
                                                             <input
                                                                 type="text"
                                                                 class="form-control"
                                                                 name="achievements[{{ $division->id }}][{{ $kpi->id }}][{{ $i }}]"
-                                                                value="{{ optional($division->kpi_performances()->where('kpi_id', $kpi->id)->where('quarter', $i)->first())->achievement }}">
+                                                                value="{{ optional($performance)->achievement }}">
+                                                            
+                                                            @if ($kpi->pivot->target)
+                                                                <span class="text-nowrap mx-2 text-muted">
+                                                                    of {{ number_format($kpi->pivot->target, 2) }}
+                                                                </span>
+                                                            @endif
+
                                                             <button class="btn btn-link">
                                                                 Upload
                                                             </button>
                                                         </div>
+                                                        @if ($performance)
+                                                            <small class="text-muted d-block mt-2">
+                                                                Updated {{ $performance->updated_at->diffForHumans() }}
+                                                            </small>
+                                                        @endif
                                                     @else
                                                         @php
                                                             $achievement = $kpi

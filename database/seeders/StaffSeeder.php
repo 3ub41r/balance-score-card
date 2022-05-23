@@ -1805,5 +1805,9 @@ class StaffSeeder extends Seeder
                                                                             
         $id = DB::table('users')->insertGetId(['name' => "NORMARIANA BINTI JAFFAR", 'email' => 'maria@kolejspace.edu.my', 'password' => Hash::make('880106015402')]);
         DB::table('staff')->insert(['name' => "NORMARIANA BINTI JAFFAR", 'user_id' => $id]);
+        
+        // Admin
+        $id = DB::table('users')->insertGetId(['name' => "DR. NOORHASYIMAH BINTI ISMAIL", 'email' => 'hasyimah@utmspace.edu.my', 'password' => Hash::make('123123'), 'is_admin' => true]);
+        DB::table('staff')->insert(['name' => "DR. NOORHASYIMAH BINTI ISMAIL", 'user_id' => $id]);
     }
 }

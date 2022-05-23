@@ -20,4 +20,9 @@ class Kpi extends Model
     {
         return $this->hasMany(KpiPerformance::class);
     }
+
+    public function perspective()
+    {
+        return $this->belongsTo(Perspective::class);
+    }
 }
