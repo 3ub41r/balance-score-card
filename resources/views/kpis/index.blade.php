@@ -17,7 +17,7 @@
             <div class="mb-4">
                 @foreach ($perspectives as $perspective)
                     <div class="my-4">
-                        <h6 class="my-4">{{ $perspective->code }}: {{ $perspective->name }}</h6>
+                        <h5 class="my-4">{{ $perspective->code }}: {{ $perspective->name }}</h5>
 
                         @if ($perspective->kpis->isEmpty())
                             <p class="text-muted">No KPI yet.</p>
@@ -34,9 +34,9 @@
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Division</th>
-                                                    <th>Target</th>
+                                                    <th class="border-start">Target</th>
                                                     @for ($i = 1; $i <= 4; $i++)
-                                                        <th class="text-center">Q{{ $i }}</th>
+                                                        <th class="text-center border-start">Q{{ $i }}</th>
                                                     @endfor
                                                 </tr>
                                             </thead>
@@ -46,7 +46,7 @@
                                                         <td class="border-end">
                                                             {{ $division->department->name }}
                                                         </td>
-                                                        <td class="border-start border-end">
+                                                        <td class="border-start">
                                                             {{ $division->pivot->target }}
                                                         </td>
                                                         @for ($i = 1; $i <= 4; $i++)

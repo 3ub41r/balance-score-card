@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\Approver\KpiController as ApproverKpiController;
 use App\Http\Controllers\ChangeYearController;
 use App\Http\Controllers\DashboardController;
@@ -34,6 +35,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
         Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');
+
+        Route::get('/approval', [ApprovalController::class, 'index'])->name('approval.index');
         
         Route::resource('/perspectives', PerspectiveController::class);
         Route::resource('/kpis', KpiController::class);

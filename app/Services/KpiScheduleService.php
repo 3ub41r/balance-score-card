@@ -6,6 +6,16 @@ use App\Models\KpiSchedule;
 
 class KpiScheduleService
 {
+    public function getCurrentQuarter()
+    {
+        $today = now()->toDateString();
+
+        return KpiSchedule::orderBy('key_in_starts_on')
+            ->where('key_in_starts_on', '<=', $today)
+            ->where('approval_ends_on', '>=', $today)
+            ->first();
+    }
+
     public function getCurrentKeyInQuarter()
     {
         $today = now()->toDateString();

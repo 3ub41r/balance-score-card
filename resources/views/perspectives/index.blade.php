@@ -16,9 +16,9 @@
             </a>
 
             @foreach ($perspectives->groupBy('perspective_category.name') as $perspectiveCategory => $perspectives)
-                <h6 class="mb-3">{{ $perspectiveCategory }}</h6>
+                <h5 class="my-4">{{ $perspectiveCategory }}</h5>
 
-                <div class="list-group mb-4">
+                <div class="list-group mb-5">
                     @foreach ($perspectives as $perspective)
                         <a href="{{ route('perspectives.edit', $perspective) }}" class="list-group-item list-group-item-action">
                             {{ $perspective->code }}: {{ $perspective->name }}
