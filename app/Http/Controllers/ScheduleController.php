@@ -24,14 +24,14 @@ class ScheduleController extends Controller
         
         // Loop quarters
         for ($quarter = 1; $quarter <= 4; $quarter++) {
-            if (
-                !$request->input('key_in_starts.' . $quarter)
-                || !$request->input('key_in_ends.' . $quarter)
-                || !$request->input('approval_starts.' . $quarter)
-                || !$request->input('approval_ends.' . $quarter)
-            ) {
-                continue;
-            }
+            // if (
+            //     !$request->input('key_in_starts.' . $quarter)
+            //     || !$request->input('key_in_ends.' . $quarter)
+            //     || !$request->input('approval_starts.' . $quarter)
+            //     || !$request->input('approval_ends.' . $quarter)
+            // ) {
+            //     continue;
+            // }
             
             KpiSchedule::updateOrCreate([
                 'year_implemented' => $year,

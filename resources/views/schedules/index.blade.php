@@ -21,20 +21,20 @@
                                 <td class="{{ !optional($schedules->firstWhere('quarter', $i))->key_in_starts_on || !optional($schedules->firstWhere('quarter', $i))->key_in_ends_on ? 'table-danger' : '' }}">
                                     <div class="row g-2 align-items-center">
                                         <div class="col">
-                                            <input type="date" name="key_in_starts[{{ $i }}]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', $i))->key_in_starts_on }}">
+                                            <input type="date" name="key_in_starts[{{ $i }}]" class="form-control" value="{{ optional(optional($schedules->firstWhere('quarter', $i))->key_in_starts_on)->format('Y-m-d') }}">
                                         </div>
                                         <div class="col">
-                                            <input type="date" name="key_in_ends[{{ $i }}]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', $i))->key_in_ends_on }}">
+                                            <input type="date" name="key_in_ends[{{ $i }}]" class="form-control" value="{{ optional(optional($schedules->firstWhere('quarter', $i))->key_in_ends_on)->format('Y-m-d') }}">
                                         </div>
                                     </div>
                                 </td>
                                 <td class="{{ !optional($schedules->firstWhere('quarter', $i))->approval_starts_on || !optional($schedules->firstWhere('quarter', $i))->approval_ends_on ? 'table-danger' : '' }}">
                                     <div class="row g-2 align-items-center">
                                         <div class="col">
-                                            <input type="date" name="approval_starts[{{ $i }}]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', $i))->approval_starts_on }}">
+                                            <input type="date" name="approval_starts[{{ $i }}]" class="form-control" value="{{ optional(optional($schedules->firstWhere('quarter', $i))->approval_starts_on)->format('Y-m-d') }}">
                                         </div>
                                         <div class="col">
-                                            <input type="date" name="approval_ends[{{ $i }}]" class="form-control" value="{{ optional($schedules->firstWhere('quarter', $i))->approval_ends_on }}">
+                                            <input type="date" name="approval_ends[{{ $i }}]" class="form-control" value="{{ optional(optional($schedules->firstWhere('quarter', $i))->approval_ends_on)->format('Y-m-d') }}">
                                         </div>
                                     </div>
                                 </td>

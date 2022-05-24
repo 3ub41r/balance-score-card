@@ -23,10 +23,6 @@ class LoginController extends Controller
  
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
-            // So sekarang dah boleh login. Nak kawal je apa yang boleh dicapai
-            // Kena guna middleware
-
             $user = Auth::user();
 
             if ($user->is_admin) {

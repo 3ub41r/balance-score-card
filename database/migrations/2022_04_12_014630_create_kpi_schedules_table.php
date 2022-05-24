@@ -17,10 +17,10 @@ class CreateKpiSchedulesTable extends Migration
             $table->id();
             $table->integer('year_implemented');
             $table->integer('quarter');
-            $table->date('key_in_starts_on');
-            $table->date('key_in_ends_on');
-            $table->date('approval_starts_on');
-            $table->date('approval_ends_on');
+            $table->date('key_in_starts_on')->nullable();
+            $table->date('key_in_ends_on')->nullable();
+            $table->date('approval_starts_on')->nullable();
+            $table->date('approval_ends_on')->nullable();
             $table->timestamps();
         });
     }

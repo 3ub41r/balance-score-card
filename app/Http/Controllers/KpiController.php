@@ -52,11 +52,26 @@ class KpiController extends Controller
             $target = $request->input('targets.' . $division);
             $totalTarget += $target;
 
-            $divisionTargets[$division] = ['target' => $target];
+            // Loop quarters
+            $quarterReportings = [];
+
+            for ($quarter = 1; $quarter <= 4; $quarter++) {
+                $quarterReportings['q' . $quarter] = $request->has("quarters.{$division}.{$quarter}");
+            }
+
+            // Append
+            $divisionTargets[$division] = [
+                'target' => $target,
+            ] + $quarterReportings;
         }
 
-        $kpi = Kpi::create($request->except('divisions', 'targets') + ['target' => $totalTarget]);
-        
+        $kpiData = $request->except([
+            'divisions',
+            'targets',
+            'quarters',
+        ]) + ['target' => $totalTarget];
+
+        $kpi = Kpi::create($kpiData);
         $kpi->divisions()->sync($divisionTargets);
 
         return redirect()->route('kpis.index');
@@ -92,19 +107,37 @@ class KpiController extends Controller
         $divisionTargets = [];
         $totalTarget = 0;
 
+        // Loop checked divisions
         foreach ($request->input('divisions') as $division) {
             // Assign division
             $target = $request->input('targets.' . $division);
             $totalTarget += $target;
 
-            $divisionTargets[$division] = ['target' => $target];
+            // Loop quarters
+            $quarterReportings = [];
+
+            for ($quarter = 1; $quarter <= 4; $quarter++) {
+                $quarterReportings['q' . $quarter] = $request->has("quarters.{$division}.{$quarter}");
+            }
+
+            // Append
+            $divisionTargets[$division] = [
+                'target' => $target,
+            ] + $quarterReportings;
         }
 
         $kpi->divisions()->sync($divisionTargets);
+        
+        $kpiData = $request->except([
+            'divisions',
+            'targets',
+            'quarters',
+        ]) + ['target' => $totalTarget];
+        $kpi->update($kpiData);
 
-        $kpi->update($request->except('divisions', 'targets') + ['target' => $totalTarget]);
-
-        return redirect()->route('kpis.index');
+        return redirect()
+            ->route('kpis.index')
+            ->with('message', 'KPI updated.');
     }
 
     public function destroy(Kpi $kpi)

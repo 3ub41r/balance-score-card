@@ -13,7 +13,9 @@ class Kpi extends Model
 
     public function divisions()
     {
-        return $this->belongsToMany(Division::class, 'division_kpis')->withPivot('target');
+        return $this->belongsToMany(Division::class, 'division_kpis')
+            ->withPivot('target', 'q1', 'q2', 'q3', 'q4')
+            ->withTimestamps();
     }
 
     public function kpi_performances()

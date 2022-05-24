@@ -77,15 +77,31 @@
                                     {{ $division->department->name }}
                                 </label>
                             </div>
-                            <div>
-                                <input
-                                    x-show="isChecked"
-                                    type="text"
-                                    class="form-control"
-                                    name="targets[{{ $division->id }}]"
-                                    id="target-{{ $division->id }}"
-                                    placeholder="Target"
-                                    value="{{ old('targets.' . $division->id, optional(optional($kpi->divisions->firstWhere('id', $division->id))->pivot)->target) }}">
+                            <div x-show="isChecked">
+                                <div class="d-flex align-items-center">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="targets[{{ $division->id }}]"
+                                        id="target-{{ $division->id }}"
+                                        placeholder="Target"
+                                        value="{{ old('targets.' . $division->id, optional(optional($kpi->divisions->firstWhere('id', $division->id))->pivot)->target) }}">
+    
+                                    <div class="ms-3 d-flex">
+                                        @for ($i = 1; $i <= 4; $i++)
+                                            <div class="form-check form-check-inline">
+                                                <input
+                                                    class="form-check-input"
+                                                    type="checkbox" name="quarters[{{ $division->id }}][{{ $i }}]"
+                                                    id="q-{{ $division->id }}-{{ $i }}"
+                                                    {{ optional(optional($kpi->divisions->firstWhere('id', $division->id))->pivot)['q' . $i] ? ' checked' : '' }}>
+                                                <label class="form-check-label" for="q-{{ $division->id }}-{{ $i }}">
+                                                    Q{{ $i }}
+                                                </label>
+                                            </div>
+                                        @endfor
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforeach
