@@ -14,7 +14,11 @@ class KpiController extends Controller
         $year = $request->session()->get('year') ?? now()->year;
 
         $perspectives = Perspective::where('year_implemented', $year)
-            ->with('kpis')
+            ->with([
+                'kpis',
+                'kpis.divisions',
+                'kpis.divisions.department',
+            ])
             ->orderBy('code')
             ->get();
 

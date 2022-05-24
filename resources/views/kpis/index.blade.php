@@ -16,18 +16,55 @@
             </a>
             <div class="mb-4">
                 @foreach ($perspectives as $perspective)
-                    <div class="mb-4">
-                        <h6 class="mb-3">{{ $perspective->code }}: {{ $perspective->name }}</h6>
+                    <div class="my-4">
+                        <h6 class="my-4">{{ $perspective->code }}: {{ $perspective->name }}</h6>
 
                         @if ($perspective->kpis->isEmpty())
                             <p class="text-muted">No KPI yet.</p>
                         @else
-                            <div class="list-group">
-                                @foreach ($perspective->kpis as $kpi)
-                                    <a href="{{ route('kpis.edit', $kpi) }}" class="list-group-item list-group-item-action">
-                                        {{ $kpi->code }}: {{ $kpi->name }}
-                                    </a>
-                                @endforeach
+                            <div class="mb-5 table-responsive">
+                                <table class="table table-hover table-bordered rounded">
+                                    <thead>
+                                        <tr>
+                                            <th>Division</th>
+                                            <th>Target</th>
+                                            @for ($i = 1; $i <= 4; $i++)
+                                                <th class="text-center">Q{{ $i }}</th>
+                                            @endfor
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($perspective->kpis as $kpi)
+                                            <tr>
+                                                <td colspan="6">
+                                                    <a href="{{ route('kpis.edit', $kpi) }}">
+                                                        {{ $kpi->code }}: {{ $kpi->name }}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @if ($kpi->divisions->isNotEmpty())
+                                                @foreach ($kpi->divisions as $division)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $division->department->name }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $division->pivot->target }}
+                                                        </td>
+                                                        @for ($i = 1; $i <= 4; $i++)
+                                                            <td class="text-center" title="Q{{ $i }}">
+                                                                @if ($division->pivot['q' . $i])
+                                                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                                                @endif
+                                                            </td>
+                                                        @endfor
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                            
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         @endif
                     </div>
