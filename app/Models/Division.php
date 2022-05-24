@@ -36,9 +36,9 @@ class Division extends Model
             ->withTimestamps();
     }
 
-    public function getKpiStatusAttribute()
+    public function kpi_status()
     {
-        return $this->kpi_statuses()->latest()->first();
+        return $this->belongsTo(KpiStatus::class);
     }
 
     public function kpiStatusByQuarter($quarter)
@@ -52,20 +52,26 @@ class Division extends Model
 
     public function submitKpis()
     {
-        $quarter = $this->getCurrentKeyInQuarter();;
+        $quarter = $this->getCurrentKeyInQuarter();
+        $statusId = 1;
 
         $this
             ->kpi_statuses()
-            ->attach(1, ['quarter' => $quarter->quarter]);
+            ->attach($statusId, ['quarter' => $quarter->quarter]);
+
+        $this->update(['kpi_status_id' => $statusId]);
     }
     
     public function markKpisReviewed()
     {
         $quarter = $this->getCurrentKeyInQuarter();
+        $statusId = 2;
 
         $this
             ->kpi_statuses()
-            ->attach(2, ['quarter' => $quarter->quarter]);
+            ->attach($statusId, ['quarter' => $quarter->quarter]);
+
+        $this->update(['kpi_status_id' => $statusId]);
     }
 
     private function getCurrentKeyInQuarter()

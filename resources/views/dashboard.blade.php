@@ -13,6 +13,12 @@
                                 @foreach ($staff->pic_divisions as $picDivision)
                                     <li>
                                         {{ $picDivision->department->name }}
+
+                                        @if ($picDivision->kpi_status)
+                                            <span class="badge rounded-pill bg-secondary">
+                                                {{ $picDivision->kpi_status->name }}
+                                            </span>
+                                        @endif
                                     </li>
                                 @endforeach
                             </ul>
@@ -40,6 +46,12 @@
                                 @foreach ($staff->approver_divisions as $approverDivision)
                                     <li>
                                         {{ $approverDivision->department->name }}
+
+                                        @if ($approverDivision->kpi_status)
+                                            <span class="badge rounded-pill bg-secondary">
+                                                {{ $approverDivision->kpi_status->name }}
+                                            </span>
+                                        @endif
                                     </li>
                                 @endforeach
                             </ul>
