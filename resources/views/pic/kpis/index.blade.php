@@ -1,5 +1,5 @@
 <x-pic-layout>
-    <div class="container my-4">
+    <div x-data="" class="container my-4">
         @if ($divisions->isEmpty())
             <h5 class="text-center my-5">
                 There are no KPIs set for the selected year.

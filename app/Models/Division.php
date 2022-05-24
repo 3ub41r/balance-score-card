@@ -36,6 +36,11 @@ class Division extends Model
             ->withTimestamps();
     }
 
+    public function getKpiStatusAttribute()
+    {
+        return $this->kpi_statuses()->latest()->first();
+    }
+
     public function kpiStatusByQuarter($quarter)
     {
         return $this
@@ -47,9 +52,7 @@ class Division extends Model
 
     public function submitKpis()
     {
-        $quarter = KpiSchedule::whereRaw('now() between key_in_starts_on and key_in_ends_on')
-            ->orderBy('key_in_starts_on')
-            ->first();
+        $quarter = $this->getCurrentKeyInQuarter();;
 
         $this
             ->kpi_statuses()
@@ -58,12 +61,19 @@ class Division extends Model
     
     public function markKpisReviewed()
     {
-        $quarter = KpiSchedule::whereRaw('now() between key_in_starts_on and key_in_ends_on')
-            ->orderBy('key_in_starts_on')
-            ->first();
+        $quarter = $this->getCurrentKeyInQuarter();
 
         $this
             ->kpi_statuses()
             ->attach(2, ['quarter' => $quarter->quarter]);
+    }
+
+    private function getCurrentKeyInQuarter()
+    {
+        $today = now()->toDateString();
+        return KpiSchedule::orderBy('key_in_starts_on')
+            ->where('key_in_starts_on', '<=', $today)
+            ->where('key_in_ends_on', '>=', $today)
+            ->first();
     }
 }

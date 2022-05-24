@@ -22,7 +22,7 @@
                             </p>
                 
                             <a href="{{ route('pic.kpis.index') }}" class="btn btn-primary">
-                                Update KPIs
+                                Update KPIs for Q{{ $keyInQuarter->quarter }}
                                 <i class="bi bi-arrow-right-short"></i>
                             </a>
                         </div>
@@ -49,7 +49,7 @@
                             </p>
                 
                             <a href="{{ route('approver.kpis.index') }}" class="btn btn-primary">
-                                Approve KPIs
+                                Approve KPIs for Q{{ $approvalQuarter->quarter }}
                                 <i class="bi bi-arrow-right-short"></i>
                             </a>
                         </div>

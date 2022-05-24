@@ -34,9 +34,6 @@
                                                 {{ $kpi->code }}: {{ $kpi->name }}
                                             </strong>
                                             <p class="text-muted my-2">{{ $kpi->od }}</p>
-                                            <small class="d-block mt-2">
-                                                {{ number_format($kpi->pivot->target, 2) }}
-                                            </small>
                                         </td>
                                         @for ($i = 1; $i <= 4; $i++)
                                             <td class="{{ $currentQuarter && $currentQuarter->quarter == $i ? 'table-primary' : '' }}">
@@ -52,6 +49,11 @@
                                                     <span>
                                                         {{ $achievement->achievement }}
                                                     </span>
+                                                    @if ($kpi->pivot->target)
+                                                        <small class="text-muted">
+                                                            / {{ number_format($kpi->pivot->target, 2) }}
+                                                        </small>
+                                                    @endif
                                                 @endif
                                             </td>
                                         @endfor

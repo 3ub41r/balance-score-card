@@ -6,19 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Division;
 use App\Models\KpiPerformance;
 use App\Models\KpiSchedule;
+use App\Services\KpiScheduleService;
 use Illuminate\Http\Request;
 
 class KpiController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, KpiScheduleService $kpiScheduleService)
     {
         $year = $request->session()->get('year') ?? now()->year;
 
         // Get current quarter
-        $currentQuarter = KpiSchedule::whereRaw('now() between key_in_starts_on and key_in_ends_on')
-            ->orderBy('key_in_starts_on')
-            ->first();
-
+        $currentQuarter = $kpiScheduleService->getCurrentKeyInQuarter();
         $staff = $request->user()->staff;
 
         $divisions = $staff->pic_divisions()
