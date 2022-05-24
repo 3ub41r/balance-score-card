@@ -22,13 +22,19 @@ class DashboardController extends Controller
         $staff = $request->user()
             ->staff()
             ->with([
-                'pic_divisions' => function ($query) use ($year) {
+                'pic_divisions' => function ($query) use ($year, $keyInQuarter) {
                     $query
+                        ->whereHas('kpis', function ($query) use ($keyInQuarter) {
+                            $query->where('q' . $keyInQuarter->quarter, true);
+                        })
                         ->where('year_implemented', $year)
                         ->with('department');
                 },
-                'approver_divisions' => function ($query) use ($year) {
+                'approver_divisions' => function ($query) use ($year, $approvalQuarter) {
                     $query
+                        ->whereHas('kpis', function ($query) use ($approvalQuarter) {
+                            $query->where('q' . $approvalQuarter->quarter, true);
+                        })
                         ->where('year_implemented', $year)
                         ->with('department');
                 },
