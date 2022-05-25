@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');
 
         Route::get('/approval', [ApprovalController::class, 'index'])->name('approval.index');
+        Route::post('/approval/{division}/approve', [ApprovalController::class, 'approve'])->name('approval.approve');
+        Route::post('/approval/{division}/reject', [ApprovalController::class, 'reject'])->name('approval.reject');
         
         Route::resource('/perspectives', PerspectiveController::class);
         Route::resource('/kpis', KpiController::class);

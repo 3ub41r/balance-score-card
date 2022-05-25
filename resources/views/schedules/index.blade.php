@@ -1,7 +1,5 @@
 <x-layout>
-    <div class="container">
-        <x-kpi-tabs />
-
+    <div class="container my-4">
         <form action="{{ route('schedules.store') }}" method="POST">
             @csrf
 

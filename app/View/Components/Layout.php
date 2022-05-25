@@ -6,14 +6,17 @@ use Illuminate\View\Component;
 
 class Layout extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
+    public $links;
+
     public function __construct()
     {
-        //
+        $this->links = [
+            'Divisions' => route('divisions.index'),
+            'Schedule' => route('schedules.index'),
+            'Perspectives' => route('perspectives.index'),
+            'KPI' => route('kpis.index'),
+            'Approvals' => route('approval.index'),
+        ];
     }
 
     /**

@@ -1,7 +1,5 @@
 <x-layout>
-    <div class="container">
-        <x-kpi-tabs />
-
+    <div class="container my-4">
         @if ($perspectives->isEmpty())
             <div class="text-center my-5">
                 <h5 class="fw-bold my-3">You have not added any perspectives.</h5>

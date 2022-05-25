@@ -52,20 +52,27 @@ class Division extends Model
 
     public function submitKpis()
     {
-        $quarter = $this->getCurrentKeyInQuarter();
-        $statusId = 1;
-
-        $this
-            ->kpi_statuses()
-            ->attach($statusId, ['quarter' => $quarter->quarter]);
-
-        $this->update(['kpi_status_id' => $statusId]);
+        $this->updateKpiStatus(1);
     }
     
     public function markKpisReviewed()
     {
-        $quarter = $this->getCurrentKeyInQuarter();
-        $statusId = 2;
+        $this->updateKpiStatus(2);
+    }
+    
+    public function approveKpis()
+    {
+        $this->updateKpiStatus(3);
+    }
+    
+    public function rejectKpis()
+    {
+        $this->updateKpiStatus(4);
+    }
+
+    public function updateKpiStatus($statusId)
+    {
+        $quarter = $this->getCurrentQuarter();
 
         $this
             ->kpi_statuses()
@@ -74,12 +81,12 @@ class Division extends Model
         $this->update(['kpi_status_id' => $statusId]);
     }
 
-    private function getCurrentKeyInQuarter()
+    private function getCurrentQuarter()
     {
         $today = now()->toDateString();
         return KpiSchedule::orderBy('key_in_starts_on')
             ->where('key_in_starts_on', '<=', $today)
-            ->where('key_in_ends_on', '>=', $today)
+            ->where('approval_ends_on', '>=', $today)
             ->first();
     }
 }

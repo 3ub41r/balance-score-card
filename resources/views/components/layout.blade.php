@@ -1,5 +1,5 @@
 <x-base>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
         <div class="container">
             <a class="navbar-brand" href="{{ route('schedules.index') }}">BSC</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,9 +7,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('divisions.index') }}">Settings</a>
-                    </li>
+                    @foreach ($links as $label => $url)
+                        <li class="nav-item">
+                            <a class="nav-link{{ request()->url() == $url ? ' active' : '' }}" href="{{ $url }}">
+                                {{ $loop->iteration }}. {{ $label }}
+                            </a>
+                        </li>
+                    @endforeach
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Year {{ session('year') ?? now()->year }}

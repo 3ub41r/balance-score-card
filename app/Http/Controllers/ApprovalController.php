@@ -18,7 +18,7 @@ class ApprovalController extends Controller
     public function index(Request $request)
     {
         $year = $request->session()->get('year') ?? now()->year;
-        $currentQuarter = $this->kpiScheduleService->getCurrentQuarter();
+        $currentQuarter = $this->kpiScheduleService->getCurrentApprovalQuarter();
 
         $divisions = Division::where('year_implemented', $year)
             ->has('kpis')
@@ -29,8 +29,20 @@ class ApprovalController extends Controller
             ])
             ->get();
 
-        // return $divisions;
-
         return view('approval/index', compact('divisions', 'currentQuarter'));
+    }
+
+    public function approve(Division $division)
+    {
+        $division->approveKpis();
+        
+        return back()->with('message', "KPIs for {$division->department->name} approved.");
+    }
+    
+    public function reject(Division $division)
+    {
+        $division->rejectKpis();
+
+        return back()->with('message', "KPIs for {$division->department->name} rejected.");
     }
 }

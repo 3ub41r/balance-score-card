@@ -15,6 +15,7 @@ class KpiTabs extends Component
             'Schedule' => route('schedules.index'),
             'Perspectives' => route('perspectives.index'),
             'KPI' => route('kpis.index'),
+            'Approvals' => route('approval.index'),
         ];
     }
 
